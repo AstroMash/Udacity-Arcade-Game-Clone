@@ -1,8 +1,20 @@
-// Set this to true only if you want to see the player/enemy hitboxes (may cause a decrease in rendering performance)
-var showHitbox = true;
+// Global variable for hitbox visibility. Set by checkbox on game board.
+var hitboxCheckbox = document.getElementById("hitbox");
+var showHitbox = hitboxCheckbox.checked;
+// Listen for a change in the hitbox checkbox and toggle hitbox visibility
+hitboxCheckbox.addEventListener('click', function() {
+    showHitbox = hitboxCheckbox.checked;
+});
 
+
+// Global variable for difficulty. Set by dropdown on game board.
+var difficultyDropdown = document.getElementById("difficulty");
 // Difficulty range is 1 to 10 with 1 being the easiest. Raises or lowers the chance of generating new enemies each loop.
-var difficulty = 4;
+var difficulty = difficultyDropdown.value;
+// Listen for a change in the difficulty dropdown and adjust difficulty
+difficultyDropdown.addEventListener('change', function () {
+    difficulty = difficultyDropdown.value;
+});
 
 // Enemies our player must avoid
 var Enemy = function() {
