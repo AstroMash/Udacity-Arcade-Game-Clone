@@ -1,6 +1,9 @@
 // Set this to true only if you want to see the player/enemy hitboxes (may cause a decrease in rendering performance)
 var showHitbox = true;
 
+// Difficulty range is 1 to 10 with 1 being the easiest. Raises or lowers the chance of generating new enemies each loop.
+var difficulty = 4;
+
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
@@ -9,10 +12,13 @@ var Enemy = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+    
+    // Create hitbox parameters
     this.hitbox = { xOffset: 2, yOffset: 78, width: 97, height: 65 };
 
     // Lanes are the rows that enemies can traverse (count starts at 0, skipping water lane)
     const lanes = [1, 2, 4, 5];
+
     // Randomize lanes and select one for the enemy to spawn on
     const spawnLane = (lanes[Math.floor(Math.random() * lanes.length)]) - 1;
     this.x = -101;
@@ -48,27 +54,29 @@ Enemy.prototype.render = function(ele, ind, arr) {
 };
 
 Enemy.prototype.checkCollision = function () {
+    // Generate hitbox using defined parameters from enemy and player objects
     var enemyHitbox = { x: this.x + this.hitbox.xOffset, y: this.y + this.hitbox.yOffset, width: this.hitbox.width, height: this.hitbox.height };
     var playerHitbox = { x: player.x + player.hitbox.xOffset, y: player.y + player.hitbox.yOffset, width: player.hitbox.width, height: player.hitbox.height };
 
+    // Check if any edge of the enemy overlaps any edge of the player
     if (enemyHitbox.x < playerHitbox.x + playerHitbox.width &&
         enemyHitbox.x + enemyHitbox.width > playerHitbox.x &&
         enemyHitbox.y < playerHitbox.y + playerHitbox.height &&
         enemyHitbox.height + enemyHitbox.y > playerHitbox.y) {
-        // collision detected!
-        console.log("Collision!"); 
+        // Collision detected! Send player back to spawn.
         player.x = 303;
         player.y = 465;
     }
 }
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+// Player class
 var Player = function(x, y) {
+    // The image/sprite for our character
     this.sprite = 'images/char-boy.png';
     this.x = x;
     this.y = y;
+
+    // Creat hitbox parameters for our character
     this.hitbox = { xOffset: 34, yOffset: 114, width: 35, height: 25 };
 }
 
@@ -76,8 +84,10 @@ Player.prototype.update = function(dt) {
     this.checkWin();
 }
 
+// Check if player sprite has made it to the water lane
 Player.prototype.checkWin = function() {
     if (this.y === -33) {
+        // Send back to starting tile
         this.x = 303;
         this.y = 465;
     }
@@ -92,10 +102,12 @@ Player.prototype.render = function() {
     }
 }
 
+// Take player inputs and translate to sprite movement
 Player.prototype.handleInput = function(kc) {
     switch (kc) {
         case 'w':
         case 'up': {
+            // Don't allow movement up out of playable area
             if(this.y > -33){
                 this.y -= 83;
             }
@@ -103,6 +115,7 @@ Player.prototype.handleInput = function(kc) {
         }
         case 's':
         case 'down': {
+            // Don't allow movement down out of playable area
             if(this.y < 465){
                 this.y += 83;
             }
@@ -110,6 +123,7 @@ Player.prototype.handleInput = function(kc) {
         }
         case 'a':
         case 'left': {
+            // Don't allow movement left out of playable area
             if(this.x > 0){
                 this.x -= 101;
             }
@@ -117,6 +131,7 @@ Player.prototype.handleInput = function(kc) {
         }
         case 'd':
         case 'right': {
+            // Don't allow movement right out of playable area
             if(this.x < 606){
                 this.x += 101;
             }
@@ -126,13 +141,14 @@ Player.prototype.handleInput = function(kc) {
 }
 
 function drawHitbox(ele) {
+    // Style the hitbox
     ctx.strokeStyle = "#FF0000";
+
+    // Draw the hitbox around the sprite
     ctx.strokeRect(ele.x + ele.hitbox.xOffset, ele.y + ele.hitbox.yOffset, ele.hitbox.width, ele.hitbox.height);
 }
 
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
+// Instantiate enemy objects
 function generateInitialEnemies(num) {
     var enemies = [];
     const enemyCount = num;
@@ -141,8 +157,11 @@ function generateInitialEnemies(num) {
     }
     return enemies;
 }
+
+// Create initial set of enemies
 var allEnemies = generateInitialEnemies(4);
 
+// Create player and place on starting tile
 var player = new Player(303,465);
 
 // This listens for key presses and sends the keys to your

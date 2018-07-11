@@ -20,13 +20,13 @@ var Engine = (function(global) {
      */
     var doc = global.document,
         win = global.window,
-        canvas = doc.createElement('canvas'),
+        canvas = doc.querySelector('canvas'),
         ctx = canvas.getContext('2d'),
         lastTime;
 
     canvas.width = 707;
     canvas.height = 707;
-    doc.body.appendChild(canvas);
+    //doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -78,8 +78,10 @@ var Engine = (function(global) {
      * on the entities themselves within your app.js file).
      */
     function update(dt) {
+        // Random spawn chance
         const spawnChance = Math.random() * 100;
-        if (spawnChance <= 4) {
+        // Uses the 'difficulty' global to generate enemies every loop
+        if (spawnChance <= difficulty) {
             allEnemies.push(new Enemy());
         }
         updateEntities(dt);
