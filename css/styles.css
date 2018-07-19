@@ -17,10 +17,6 @@ body {
     padding: 0;
 }
 
-body {
-    text-align: center;
-}
-
 /*
  * Layout
  */
@@ -76,7 +72,7 @@ body {
 
 .sidebar {
     width: 253px;
-    padding: 0 0 0 40px;
+    padding: 50px 0 0 40px;
     -webkit-order: 0;
     -ms-flex-order: 0;
     order: 0;
@@ -86,4 +82,12 @@ body {
     -webkit-align-self: auto;
     -ms-flex-item-align: auto;
     align-self: auto;
+}
+
+.controls select {
+    width: 100%;
+}
+
+.controls #hitbox {
+    margin-top: 20px;
 }
