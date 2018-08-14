@@ -88,6 +88,10 @@ body {
     width: 100%;
 }
 
-.controls #hitbox {
+.controls, .controls #hitbox {
     margin-top: 20px;
+}
+
+.info-label {
+    font-weight: bold;
 }

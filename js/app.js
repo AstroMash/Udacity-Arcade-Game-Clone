@@ -1,3 +1,10 @@
+var game = {};
+
+game.score = 0;
+
+var scoreDisplay = document.querySelector('.info-score');
+scoreDisplay.innerHTML = game.score;
+
 // Global variable for hitbox visibility. Set by checkbox on game board.
 var hitboxCheckbox = document.getElementById("hitbox");
 var showHitbox = hitboxCheckbox.checked;
@@ -14,6 +21,8 @@ var difficulty = difficultyDropdown.value;
 // Listen for a change in the difficulty dropdown and adjust difficulty
 difficultyDropdown.addEventListener('change', function () {
     difficulty = difficultyDropdown.value;
+    //Blur dropdown so that when arrow keys are used to move player after difficulty selection, the dropdown value doesn't change
+    this.blur();
 });
 
 // Enemies our player must avoid
@@ -78,6 +87,15 @@ Enemy.prototype.checkCollision = function () {
         // Collision detected! Send player back to spawn.
         player.x = 303;
         player.y = 465;
+        // Deduct half of the expected victory points (can't go below a score of zero)
+        if(game.score > 0) {
+            game.score -= 50 * difficulty;
+            // If deduction causes score to go below zero, set score to zero
+            if(game.score < 0) {
+                game.score = 0;
+            }
+        }
+        scoreDisplay.innerHTML = game.score;
     }
 }
 
@@ -102,6 +120,9 @@ Player.prototype.checkWin = function() {
         // Send back to starting tile
         this.x = 303;
         this.y = 465;
+        // Update score
+        game.score += 100 * difficulty;
+        scoreDisplay.innerHTML = game.score;
     }
 }
 
