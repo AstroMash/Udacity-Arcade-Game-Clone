@@ -1,6 +1,16 @@
-frontend-nanodegree-arcade-game
-===============================
+# Classic Arcade Game Clone
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+* Created for the Udacity Front-End Web Developer Nanodegree Program
+* Uses a portion of the [starter code](https://github.com/udacity/frontend-nanodegree-arcade-game) provided by Udacity
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+## Get started
+
+* Clone or download this repo
+* Open index.html in a web browser
+* Enjoy!
+
+[Demo](https://popshift.net/arcade/)
+
+## How to play
+
+Use the arrow or WASD keys to navigate your player across the field. Your goal is to reach the water without being hit by any ladybugs. Once you reach the water, you'll earn points based on the difficulty level and you'll be sent back to the start position to try again! Hitting a ladybug will also get you sent back to the start and you'll lose points based on the difficulty level.
